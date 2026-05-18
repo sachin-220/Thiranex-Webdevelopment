@@ -21,9 +21,9 @@
     --bg-base: #F9FAFB;
     --bg-secondary: #F3F4F6;
     --card-bg: rgba(255, 255, 255, 0.8);
-    --neon-cyan: #0891B2;
-    --neon-purple: #7C3AED;
-    --neon-blue: #2563EB;
+    --neon-cyan: #0E7490;
+    --neon-purple: #6D28D9;
+    --neon-blue: #1D4ED8;
     --text-primary: #111827;
     --text-secondary: #4B5563;
     --glass-bg: var(--card-bg);
@@ -130,7 +130,7 @@ a:hover { color: var(--neon-purple); text-shadow: 0 0 8px var(--neon-purple); }
 *:focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 4px; border-radius: 4px; }
 .skip-link {
     position: absolute; top: -40px; left: 0; background: var(--neon-purple);
-    color: white; padding: 8px 16px; z-index: 1000; font-weight: bold;
+    color: var(--bg-base); padding: 8px 16px; z-index: 1000; font-weight: bold;
 }
 .skip-link:focus { top: 0; }
 
@@ -186,11 +186,11 @@ main { flex: 1; padding: 2rem 0; }
 }
 .btn-primary {
     background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
-    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    color: var(--bg-base);
 }
 .btn-primary:hover {
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
-    transform: translateY(-2px); color: #fff;
+    transform: translateY(-2px); color: var(--bg-base);
 }
 .btn-secondary {
     background: transparent; border: 1px solid var(--neon-cyan);
