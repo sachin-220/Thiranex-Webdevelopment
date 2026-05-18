@@ -1,18 +1,51 @@
 /* Custom Properties & Tokens */
 :root {
-    /* Colors - Neon & Dark Cyberpunk Theme */
-    --bg-base: #050508;
-    --neon-cyan: #00f3ff;
-    --neon-purple: #9d00ff;
-    --neon-pink: #ff007f;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --glass-bg: rgba(255, 255, 255, 0.03);
+    /* Dark Theme (Default) */
+    --bg-base: #0B0F19;
+    --bg-secondary: #111827;
+    --card-bg: rgba(31, 41, 55, 0.8);
+    --neon-cyan: #06B6D4;
+    --neon-purple: #8B5CF6;
+    --neon-blue: #3B82F6;
+    --text-primary: #F9FAFB;
+    --text-secondary: #9CA3AF;
+    --glass-bg: var(--card-bg);
     --glass-border: rgba(255, 255, 255, 0.08);
 
     /* Typography */
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] {
+    --bg-base: #F9FAFB;
+    --bg-secondary: #F3F4F6;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --neon-cyan: #0891B2;
+    --neon-purple: #7C3AED;
+    --neon-blue: #2563EB;
+    --text-primary: #111827;
+    --text-secondary: #4B5563;
+    --glass-bg: var(--card-bg);
+    --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.theme-toggle:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
 }
 
 /* Reset & Global */
