@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal portfolio of an accessible, semantic HTML5 web developer, showcasing projects and skills.">
+    <title>Sachin | Web Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner" class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html" aria-label="Sachin Home">S</a>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" aria-current="page">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="container" aria-labelledby="hero-heading">
+            <div class="glass-card hero-glass">
+                <h1 id="hero-heading" class="hero-title">Crafting Futuristic & Semantic Web Experiences</h1>
+                <p class="hero-subtitle">Hi, I'm Sachin. A frontend developer dedicated to building high-performance, inclusive, and visually stunning digital products.</p>
+                <div class="cta-group">
+                    <a href="about.html" class="btn btn-primary">Explore My Journey</a>
+                    <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-work" aria-labelledby="work-heading">
+            <div class="container">
+                <h2 id="work-heading" class="section-title">Featured Projects</h2>
+                <div class="grid">
+                    <article class="glass-card card">
+                        <img src="assets/ecommerce.png" alt="Accessible E-Commerce Mockup" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title"><a href="#">Accessible E-Commerce</a></h3>
+                            <p>A full-stack e-commerce platform built with semantic HTML5 and robust ARIA patterns.</p>
+                        </div>
+                    </article>
+                    <article class="glass-card card">
+                        <img src="assets/dashboard.png" alt="Inclusive Dashboard Mockup" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title"><a href="#">Inclusive Dashboard</a></h3>
+                            <p>A data visualization dashboard focusing on high contrast and screen reader compatibility.</p>
+                        </div>
+                    </article>
+                    <article class="glass-card card">
+                        <img src="assets/design_system.png" alt="Design System Mockup" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title"><a href="#">Design System</a></h3>
+                            <p>An accessible component library created for enterprise-grade applications.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Sachin. All rights reserved.</p>
+            <nav aria-label="Footer Navigation">
+                <ul class="social-links">
+                    <li><a href="#" aria-label="GitHub Profile">GitHub</a></li>
+                    <li><a href="#" aria-label="LinkedIn Profile">LinkedIn</a></li>
+                    <li><a href="#" aria-label="Twitter Profile">Twitter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

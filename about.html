@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about Sachin, skills, experience, and development philosophy.">
+    <title>About | Sachin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner" class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html" aria-label="Sachin Home">S</a>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" aria-current="page">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="container">
+            <div class="about-grid">
+                
+                <!-- Left Column -->
+                <aside class="left-col">
+                    <article class="glass-card profile-card" aria-label="Profile Summary">
+                        <div class="avatar-container">
+                            <img src="assets/avatar.png" alt="Futuristic Avatar of Sachin" class="avatar">
+                        </div>
+                        <h1 class="profile-name">Sachin</h1>
+                        <p class="profile-title">Frontend Engineer</p>
+                        
+                        <div class="profile-socials" aria-label="Social Links">
+                            <a href="#" aria-label="GitHub">GitHub</a>
+                            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                            <a href="#" aria-label="Twitter">Twitter</a>
+                        </div>
+                        
+                        <div class="profile-actions">
+                            <a href="contact.html" class="btn btn-primary">Hire Me</a>
+                            <a href="#" class="btn btn-secondary">Download Resume</a>
+                        </div>
+                    </article>
+
+                    <article class="glass-card timeline-card" aria-label="Experience Timeline">
+                        <h2 class="timeline-title">Experience</h2>
+                        <ul class="timeline">
+                            <li class="timeline-item">
+                                <div class="timeline-date">2024 - Present</div>
+                                <div class="timeline-role">Senior Frontend Developer</div>
+                                <p>TechNova Solutions</p>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-date">2021 - 2024</div>
+                                <div class="timeline-role">UI/UX Engineer</div>
+                                <p>Creative Web Agency</p>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-date">2019 - 2021</div>
+                                <div class="timeline-role">Junior Web Developer</div>
+                                <p>Startup Hub</p>
+                            </li>
+                        </ul>
+                    </article>
+                </aside>
+
+                <!-- Right Column -->
+                <section class="right-col">
+                    <article class="glass-card bio-card" aria-labelledby="bio-heading">
+                        <h2 id="bio-heading" class="bio-title">My Journey</h2>
+                        <p>I am a passionate web developer with over 5 years of experience specializing in frontend technologies. My core philosophy is that the web is for everyone, which is why I heavily emphasize web accessibility (a11y), clean architecture, and highly performant interfaces.</p>
+                        <p>I thrive in building futuristic, interactive experiences that push the boundaries of what browsers can do today. When I'm not writing code, I enjoy experimenting with WebGL, exploring digital typography, and contributing to open-source UI libraries.</p>
+                    </article>
+
+                    <article class="glass-card skills-card" aria-labelledby="skills-heading">
+                        <h2 id="skills-heading" class="skills-title">Technical Skills</h2>
+                        
+                        <div class="skill-group" aria-label="HTML & CSS Skill">
+                            <div class="skill-info">
+                                <span>HTML5 / CSS3 (Glassmorphism)</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress-bar-bg" aria-hidden="true">
+                                <div class="progress-bar-fill fill-95"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group" aria-label="JavaScript Skill">
+                            <div class="skill-info">
+                                <span>JavaScript (ES6+)</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bar-bg" aria-hidden="true">
+                                <div class="progress-bar-fill fill-90"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group" aria-label="React & Frameworks Skill">
+                            <div class="skill-info">
+                                <span>React & Next.js</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar-bg" aria-hidden="true">
+                                <div class="progress-bar-fill fill-85"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-group" aria-label="Accessibility Skill">
+                            <div class="skill-info">
+                                <span>WAI-ARIA & Accessibility Auditing</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress-bar-bg" aria-hidden="true">
+                                <div class="progress-bar-fill fill-95"></div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Sachin. All rights reserved.</p>
+            <nav aria-label="Footer Navigation">
+                <ul class="social-links">
+                    <li><a href="#" aria-label="GitHub Profile">GitHub</a></li>
+                    <li><a href="#" aria-label="LinkedIn Profile">LinkedIn</a></li>
+                    <li><a href="#" aria-label="Twitter Profile">Twitter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
