@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive To-Do List Application with advanced filtering and state management.">
+    <meta property="og:title" content="To-Do App | Sachin">
+    <meta property="og:description" content="Interactive To-Do List Application with advanced filtering and state management.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <title>To-Do App | Sachin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome for icons (Priority, Delete, Edit, Drag) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="bg-animation" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner" class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html" aria-label="Sachin Home">S</a>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="todo.html" aria-current="page">To-Do App</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">☀️ Light Mode</button>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="container todo-container">
+            <div class="glass-card todo-card">
+                <header class="todo-header">
+                    <h1 class="page-title">Task Manager</h1>
+                    <p class="todo-subtitle">Stay organized, focused, and productive.</p>
+                </header>
+
+                <form id="todo-form" class="todo-form" aria-label="Add new task">
+                    <div class="todo-input-group">
+                        <input type="text" id="todo-input" placeholder="What needs to be done?" required aria-required="true" autocomplete="off">
+                        <div class="todo-options">
+                            <input type="date" id="todo-date" aria-label="Due date" title="Due Date">
+                            <select id="todo-priority" aria-label="Priority">
+                                <option value="low">Low Priority</option>
+                                <option value="medium" selected>Medium Priority</option>
+                                <option value="high">High Priority</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary add-btn" aria-label="Add task">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Task
+                        </button>
+                    </div>
+                </form>
+
+                <div class="todo-filters" aria-label="Task filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+
+                <div class="todo-list-container">
+                    <ul id="todo-list" class="todo-list" role="list">
+                        <!-- Tasks will be injected here dynamically -->
+                    </ul>
+                    
+                    <div id="empty-state" class="empty-state hidden">
+                        <i class="fa-regular fa-clipboard" aria-hidden="true"></i>
+                        <p>No tasks found. Time to relax or add a new one!</p>
+                    </div>
+                </div>
+
+                <footer class="todo-footer">
+                    <span id="task-counter" class="task-counter">0 tasks remaining</span>
+                    <button id="clear-completed" class="btn btn-secondary clear-btn">Clear Completed</button>
+                </footer>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Sachin. All rights reserved.</p>
+            <nav aria-label="Footer Navigation">
+                <ul class="social-links">
+                    <li><a href="https://github.com/sachin-220" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/sachin-j-50583432b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">LinkedIn</a></li>
+                    <li><a href="#" aria-label="Twitter Profile">Twitter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+    
+    <script src="theme.js"></script>
+    <script src="todo.js"></script>
+</body>
+</html>
