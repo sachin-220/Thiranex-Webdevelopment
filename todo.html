@@ -45,15 +45,47 @@
         <div class="container todo-container">
             <div class="glass-card todo-card">
                 <header class="todo-header">
+                    <div id="smart-greeting" class="smart-greeting">Good Morning, Sachin 👋</div>
                     <h1 class="page-title">Task Manager</h1>
                     <p class="todo-subtitle">Stay organized, focused, and productive.</p>
                 </header>
+
+                <div class="dashboard-stats" aria-label="Productivity Statistics">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-completed">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-pending">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-card progress-ring-card">
+                        <div class="progress-ring-container">
+                            <svg class="progress-ring" width="60" height="60">
+                                <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                <circle class="progress-ring-circle" id="progress-ring-circle" stroke="var(--neon-cyan)" stroke-width="4" stroke-dasharray="163.36" stroke-dashoffset="163.36" fill="transparent" r="26" cx="30" cy="30"/>
+                            </svg>
+                            <div class="progress-text" id="stat-productivity">0%</div>
+                        </div>
+                        <div class="stat-label">Productivity</div>
+                    </div>
+                </div>
 
                 <form id="todo-form" class="todo-form" aria-label="Add new task">
                     <div class="todo-input-group">
                         <input type="text" id="todo-input" placeholder="What needs to be done?" required aria-required="true" autocomplete="off">
                         <div class="todo-options">
                             <input type="date" id="todo-date" aria-label="Due date" title="Due Date">
+                            <select id="todo-category" aria-label="Category">
+                                <option value="work">Work</option>
+                                <option value="personal" selected>Personal</option>
+                                <option value="study">Study</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
                             <select id="todo-priority" aria-label="Priority">
                                 <option value="low">Low Priority</option>
                                 <option value="medium" selected>Medium Priority</option>
@@ -66,10 +98,16 @@
                     </div>
                 </form>
 
-                <div class="todo-filters" aria-label="Task filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="active">Active</button>
-                    <button class="filter-btn" data-filter="completed">Completed</button>
+                <div class="todo-controls">
+                    <div class="todo-filters" aria-label="Task filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                    <div class="todo-search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="todo-search-input" placeholder="Search tasks..." aria-label="Search tasks">
+                    </div>
                 </div>
 
                 <div class="todo-list-container">

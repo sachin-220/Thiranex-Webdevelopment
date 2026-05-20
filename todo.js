@@ -3,24 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // State management
     let tasks = JSON.parse(localStorage.getItem('todo_tasks')) || [];
     let currentFilter = 'all'; // 'all', 'active', 'completed'
-    let draggedTaskIndex = null;
+    let draggedTaskId = null;
 
     // DOM Elements
     const todoForm = document.getElementById('todo-form');
     const todoInput = document.getElementById('todo-input');
     const todoDate = document.getElementById('todo-date');
     const todoPriority = document.getElementById('todo-priority');
+    const todoCategory = document.getElementById('todo-category');
     const todoList = document.getElementById('todo-list');
     const emptyState = document.getElementById('empty-state');
     const taskCounter = document.getElementById('task-counter');
     const clearCompletedBtn = document.getElementById('clear-completed');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const todoSearchInput = document.getElementById('todo-search-input');
 
     // Initialize application
     init();
 
     function init() {
+        updateGreeting();
         renderTasks();
+        if (typeof updateDashboardStats === 'function') updateDashboardStats();
         
         // Event Listeners
         todoForm.addEventListener('submit', handleAddTask);
@@ -32,6 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 setFilter(e.target.dataset.filter);
             });
         });
+
+        if (todoSearchInput) {
+            todoSearchInput.addEventListener('input', () => {
+                renderTasks();
+            });
+        }
 
         // Drag and drop events using event delegation
         todoList.addEventListener('dragstart', handleDragStart);
@@ -47,15 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('todo_tasks', JSON.stringify(tasks));
         updateCounter();
         checkEmptyState();
+        if (typeof updateDashboardStats === 'function') updateDashboardStats();
     }
 
-    function addTask(text, date, priority) {
+    function addTask(text, date, priority, category) {
         const newTask = {
             id: Date.now().toString(),
             text: text.trim(),
             completed: false,
             date: date,
             priority: priority,
+            category: category || 'personal',
             createdAt: new Date().toISOString()
         };
         tasks.unshift(newTask); // Add to beginning
@@ -123,6 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredTasks = tasks.filter(task => task.completed);
         }
 
+        if (todoSearchInput && todoSearchInput.value.trim()) {
+            const query = todoSearchInput.value.trim().toLowerCase();
+            filteredTasks = filteredTasks.filter(task => task.text.toLowerCase().includes(query));
+        }
+
         filteredTasks.forEach((task, index) => {
             const li = document.createElement('li');
             li.className = `todo-item ${task.completed ? 'completed' : ''}`;
@@ -134,6 +151,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const priorityClass = `priority-${task.priority}`;
             const priorityIcon = task.priority === 'high' ? 'fa-angles-up' : 
                                  task.priority === 'low' ? 'fa-angles-down' : 'fa-minus';
+
+            const categoryBadge = task.category ? `<span class="todo-category-badge category-${task.category}"><i class="fa-solid fa-folder"></i> ${capitalize(task.category)}</span>` : '';
+            
+            // Deadline logic
+            let deadlineBadge = '';
+            if (task.date && !task.completed) {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                const dueDate = new Date(task.date);
+                dueDate.setHours(0,0,0,0);
+                
+                const diffTime = dueDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                let deadlineText = '';
+                let deadlineClass = '';
+                
+                if (diffDays < 0) {
+                    deadlineText = `Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays)>1?'s':''}`;
+                    deadlineClass = 'deadline-red';
+                } else if (diffDays === 0) {
+                    deadlineText = 'Due Today';
+                    deadlineClass = 'deadline-yellow';
+                } else if (diffDays === 1) {
+                    deadlineText = 'Due Tomorrow';
+                    deadlineClass = 'deadline-yellow';
+                } else {
+                    deadlineText = `Due in ${diffDays} days`;
+                    deadlineClass = 'deadline-green';
+                }
+                deadlineBadge = `<span class="todo-deadline-badge ${deadlineClass}"><i class="fa-regular fa-clock"></i> ${deadlineText}</span>`;
+            } else if (task.date) {
+                deadlineBadge = `<span class="todo-date-badge"><i class="fa-regular fa-calendar"></i> ${formatDate(task.date)}</span>`;
+            }
 
             li.innerHTML = `
                 <div class="todo-drag-handle" aria-label="Drag to reorder" title="Drag to reorder">
@@ -150,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="todo-priority-badge ${priorityClass}">
                             <i class="fa-solid ${priorityIcon}"></i> ${capitalize(task.priority)}
                         </span>
-                        ${task.date ? `<span class="todo-date-badge"><i class="fa-regular fa-calendar"></i> ${formatDate(task.date)}</span>` : ''}
+                        ${categoryBadge}
+                        ${deadlineBadge}
                     </div>
                 </div>
                 <div class="todo-actions">
@@ -195,12 +247,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = todoInput.value;
         const date = todoDate.value;
         const priority = todoPriority.value;
+        const category = todoCategory ? todoCategory.value : 'personal';
         
         if (text.trim()) {
-            addTask(text, date, priority);
+            addTask(text, date, priority, category);
             todoInput.value = '';
             todoDate.value = '';
             todoPriority.value = 'medium';
+            if (todoCategory) todoCategory.value = 'personal';
             todoInput.focus();
         }
     }
@@ -278,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        draggedTaskIndex = parseInt(item.dataset.index);
+        draggedTaskId = item.dataset.id;
         e.dataTransfer.effectAllowed = 'move';
         // Need to set data for Firefox
         e.dataTransfer.setData('text/plain', item.dataset.id);
@@ -317,22 +371,26 @@ document.addEventListener('DOMContentLoaded', () => {
             el.classList.remove('drag-over');
         });
 
-        if (item && draggedTaskIndex !== null) {
-            const dropIndex = parseInt(item.dataset.index);
-            if (draggedTaskIndex !== dropIndex) {
+        if (item && draggedTaskId !== null) {
+            const dropTaskId = item.dataset.id;
+            if (draggedTaskId !== dropTaskId) {
                 // Reorder tasks array
-                // Note: filtering makes this complex if not viewing 'all'. 
-                // We should only allow reordering when viewing 'all', or handle global index map.
-                if (currentFilter === 'all') {
-                    const draggedTask = tasks[draggedTaskIndex];
-                    tasks.splice(draggedTaskIndex, 1);
-                    tasks.splice(dropIndex, 0, draggedTask);
-                    saveTasks();
-                    renderTasks();
+                if (currentFilter === 'all' && !(todoSearchInput && todoSearchInput.value.trim())) {
+                    const fromIndex = tasks.findIndex(t => t.id === draggedTaskId);
+                    const toIndex = tasks.findIndex(t => t.id === dropTaskId);
+                    
+                    if (fromIndex !== -1 && toIndex !== -1) {
+                        const [draggedTask] = tasks.splice(fromIndex, 1);
+                        tasks.splice(toIndex, 0, draggedTask);
+                        saveTasks();
+                        renderTasks();
+                    }
+                } else {
+                    alert("Drag and drop reordering is only supported when viewing 'All' tasks without active search.");
                 }
             }
         }
-        draggedTaskIndex = null;
+        draggedTaskId = null;
     }
 
     // --- Helpers ---
@@ -344,11 +402,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function capitalize(str) {
+        if (!str) return '';
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     function formatDate(dateString) {
         const options = { month: 'short', day: 'numeric', year: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    function updateGreeting() {
+        const greetingEl = document.getElementById('smart-greeting');
+        if (!greetingEl) return;
+        const hour = new Date().getHours();
+        let greeting = 'Good Evening';
+        if (hour < 12) greeting = 'Good Morning';
+        else if (hour < 18) greeting = 'Good Afternoon';
+        greetingEl.innerHTML = `${greeting}, Sachin 👋`;
+    }
+
+    function updateDashboardStats() {
+        const totalEl = document.getElementById('stat-total');
+        const completedEl = document.getElementById('stat-completed');
+        const pendingEl = document.getElementById('stat-pending');
+        const productivityEl = document.getElementById('stat-productivity');
+        const circle = document.getElementById('progress-ring-circle');
+
+        if (!totalEl) return;
+
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        const pending = total - completed;
+        const productivity = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+        totalEl.textContent = total;
+        completedEl.textContent = completed;
+        pendingEl.textContent = pending;
+        productivityEl.textContent = `${productivity}%`;
+
+        if (circle) {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (productivity / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.transition = 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            circle.style.strokeDashoffset = offset;
+        }
     }
 });
